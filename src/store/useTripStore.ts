@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { buildGartnerTrip } from '../data/gartnerTemplate'
+import { buildGartnerTrip, defaultPackingSections } from '../data/gartnerTemplate'
 import type {
   CurrencyConfig,
   DayPlanDay,
@@ -296,7 +296,7 @@ export const useTripStore = create<TripState>()(
             sessions: [],
             insights: [],
             restaurants: { totalBudget: 0, days: [] },
-            packing: { sections: emptyPackingSections() },
+            packing: { sections: defaultPackingSections() },
             dayPlan: { days: [] },
             slides: [],
             createdAt: now,

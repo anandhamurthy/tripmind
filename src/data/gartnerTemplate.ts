@@ -1,6 +1,74 @@
 import type { Insight, PackingSection, Session, SightseeingPlace, Trip } from '../types'
 import { uid } from '../store/useTripStore'
 
+/** Personal default packing list — used for every new trip. */
+export function defaultPackingSections(): PackingSection[] {
+  return [
+    {
+      id: uid(),
+      name: 'Essentials',
+      items: [
+        { id: uid(), label: 'Brush',         note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Paste',          note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Soap',           note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Shampoo',        note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Sunscreen',      note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Lip Balm',       note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Perfume',        note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Tablets',        note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Specs Cleaner',  note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Umbrella',       note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Water Bottle',   note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Tissues',        note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Face Mask',      note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Bidets',         note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Small Bag',      note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Sanitizer',      note: '', packed: false, qty: 1, owned: false },
+        { id: uid(), label: 'Moisturizer',    note: '', packed: false, qty: 1, owned: true },
+      ],
+    },
+    {
+      id: uid(),
+      name: 'Electronics',
+      items: [
+        { id: uid(), label: 'Laptop',          note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Laptop Charger',  note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Mobile Charger',  note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Headphone',       note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'PowerBank',       note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Credit Card',     note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Axis Forex Card', note: '', packed: false, qty: 1, owned: true },
+        { id: uid(), label: 'Cash',            note: '', packed: false, qty: 1, owned: true },
+      ],
+    },
+    {
+      id: uid(),
+      name: 'Clothes',
+      items: [
+        { id: uid(), label: 'Formal Shoe',              note: '', packed: false, qty: 1,  owned: false },
+        { id: uid(), label: 'Casual Shoe',              note: '', packed: false, qty: 2,  owned: false },
+        { id: uid(), label: 'Black Belt',               note: '', packed: false, qty: 1,  owned: false },
+        { id: uid(), label: 'Blazer',                   note: '', packed: false, qty: 1,  owned: false },
+        { id: uid(), label: 'Inner Wear',               note: '', packed: false, qty: 8,  additionalQty: 1, owned: true },
+        { id: uid(), label: 'Night Dress (T-Shirt + Shorts)', note: '', packed: false, qty: 4, owned: false },
+        { id: uid(), label: 'Footwear',                 note: '', packed: false, qty: 1,  owned: false },
+        { id: uid(), label: 'T-Shirt',                  note: '', packed: false, qty: 4,  owned: false },
+        { id: uid(), label: 'Track Pant',               note: '', packed: false, qty: 2,  owned: false },
+        { id: uid(), label: 'Casual Shirt',             note: '', packed: false, qty: 3,  owned: false },
+        { id: uid(), label: 'Casual Pant',              note: '', packed: false, qty: 3,  owned: false },
+        { id: uid(), label: 'Neck Pillow',              note: '', packed: false, qty: 1,  owned: true },
+        { id: uid(), label: 'Towel',                    note: '', packed: false, qty: 1,  owned: true },
+        { id: uid(), label: 'Socks',                    note: '', packed: false, qty: 8,  owned: true },
+        { id: uid(), label: 'Kerchief',                 note: '', packed: false, qty: 5,  owned: false },
+        { id: uid(), label: 'Brown Belt',               note: '', packed: false, qty: 1,  owned: true },
+        { id: uid(), label: 'Formal Shirt - Zoho',      note: '', packed: false, qty: 2,  owned: true },
+        { id: uid(), label: 'Formal Shirt',             note: '', packed: false, qty: 1,  owned: false },
+        { id: uid(), label: 'Formal Pant',              note: '', packed: false, qty: 1,  owned: false },
+      ],
+    },
+  ]
+}
+
 export function buildGartnerTrip(): Trip {
   const now = new Date().toISOString()
 

@@ -186,7 +186,7 @@ export default function ExhibitorsTab() {
       {filtered.length === 0 ? (
         <EmptyState
           icon={<BookMarked size={28} />}
-          title="No exhibitors found"
+          heading="No exhibitors found"
           description="Add exhibitors or adjust your filters."
         />
       ) : (

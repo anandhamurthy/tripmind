@@ -7,7 +7,6 @@ import type {
   DayPlanItem,
   DayPlanSlot,
   Exhibitor,
-  ExhibitorCategory,
   Flight,
   Hotel,
   Insight,

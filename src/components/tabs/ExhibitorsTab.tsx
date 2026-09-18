@@ -6,14 +6,11 @@ import {
   Pencil,
   Plus,
   Star,
-  Trash2,
-  X,
 } from 'lucide-react'
 import type { Exhibitor, ExhibitorCategory, SponsorTier } from '../../types'
 import { useActiveTrip, useTripStore } from '../../store/useTripStore'
 import Button from '../shared/Button'
 import Input from '../shared/Input'
-import Badge from '../shared/Badge'
 import EmptyState from '../shared/EmptyState'
 import ConfirmInline from '../shared/ConfirmInline'
 import SidePanel from '../layout/SidePanel'
@@ -188,7 +185,7 @@ export default function ExhibitorsTab() {
       {/* Grouped list */}
       {filtered.length === 0 ? (
         <EmptyState
-          icon={BookMarked}
+          icon={<BookMarked size={28} />}
           title="No exhibitors found"
           description="Add exhibitors or adjust your filters."
         />
@@ -346,8 +343,6 @@ interface CardProps {
 }
 
 function ExhibitorCard({ exhibitor: e, onEdit, onDelete, onToggleVisited, onToggleInterested }: CardProps) {
-  const [confirmDelete, setConfirmDelete] = useState(false)
-
   return (
     <div
       className={[
@@ -379,14 +374,7 @@ function ExhibitorCard({ exhibitor: e, onEdit, onDelete, onToggleVisited, onTogg
           >
             <Pencil size={13} />
           </button>
-          <button
-            type="button"
-            onClick={() => setConfirmDelete(true)}
-            title="Delete"
-            className="rounded p-1 text-text-secondary hover:bg-red-50 hover:text-red-500"
-          >
-            <Trash2 size={13} />
-          </button>
+          <ConfirmInline onConfirm={onDelete} message={`Delete ${e.name}?`} />
         </div>
       </div>
 
@@ -445,13 +433,6 @@ function ExhibitorCard({ exhibitor: e, onEdit, onDelete, onToggleVisited, onTogg
         )}
       </div>
 
-      {/* Confirm delete */}
-      <ConfirmInline
-        open={confirmDelete}
-        message={`Delete ${e.name}?`}
-        onConfirm={() => { onDelete(); setConfirmDelete(false) }}
-        onCancel={() => setConfirmDelete(false)}
-      />
     </div>
   )
 }

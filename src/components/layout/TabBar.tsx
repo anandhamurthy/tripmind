@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import {
+  BookOpen,
   Briefcase,
   Building2,
   CalendarDays,
@@ -25,6 +26,7 @@ export const TABS = [
   { id: 'packing', label: 'Packing', Icon: Luggage },
   { id: 'exhibitors', label: 'Exhibitors', Icon: Building2 },
   { id: 'competitive', label: 'Competitive', Icon: Target },
+  { id: 'products', label: 'Products', Icon: BookOpen },
   { id: 'summary', label: 'Summary', Icon: FileText },
 ] as const
 

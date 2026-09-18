@@ -14,6 +14,7 @@ import FoodTab from '../tabs/FoodTab'
 import PackingTab from '../tabs/PackingTab'
 import ExhibitorsTab from '../tabs/ExhibitorsTab'
 import CompetitiveTab from '../tabs/CompetitiveTab'
+import ProductsTab from '../tabs/ProductsTab'
 import SummaryTab from '../tabs/SummaryTab'
 
 const TAB_COMPONENTS: Record<string, ComponentType> = {
@@ -27,6 +28,7 @@ const TAB_COMPONENTS: Record<string, ComponentType> = {
   packing: PackingTab,
   exhibitors: ExhibitorsTab,
   competitive: CompetitiveTab,
+  products: ProductsTab,
   summary: SummaryTab,
 }
 

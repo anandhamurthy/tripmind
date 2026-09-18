@@ -1,4 +1,4 @@
-import type { Exhibitor, Insight, PackingSection, Session, SightseeingPlace, Trip } from '../types'
+import type { CompetitorClaim, Exhibitor, Insight, PackingSection, Session, SightseeingPlace, Trip } from '../types'
 import { uid } from '../store/useTripStore'
 
 /** Personal default packing list — used for every new trip. */
@@ -609,6 +609,41 @@ export function buildGartnerTrip(): Trip {
   ]
 
   /* ------------------------------------------------------------------ */
+  /* Competitive Battle Card                                             */
+  /* ------------------------------------------------------------------ */
+
+  const bc = (
+    competitor: string,
+    claim: string,
+    topic: CompetitorClaim['topic'],
+    status: CompetitorClaim['status'],
+    meProduct: CompetitorClaim['meProduct'],
+    ourResponse: string,
+  ): CompetitorClaim => ({
+    id: uid(), competitor, claim, topic, status, meProduct, ourResponse,
+    notes: '', timestamp: now, starred: false,
+  })
+
+  const battleCardClaims: CompetitorClaim[] = [
+    bc('SailPoint', 'We govern non-human identities — service accounts, bots, API keys, AI agents', 'NHI', 'Have It', 'PAM360', 'PAM360 discovers, vaults and auto-rotates service accounts, SSH keys, certificates and API secrets (AAPM). ADManager Plus governs service account lifecycle with approval workflows.'),
+    bc('CyberArk', 'Just-in-time privileged access for any identity including machine identities', 'NHI', 'Have It', 'PAM360', 'PAM360 supports JIT privilege elevation with automatic revocation. Service accounts are vaulted and session-recorded.'),
+    bc('BeyondTrust', 'AI agent identity governance — we track and control what AI agents can access', 'NHI', 'Gap', 'None', 'AI agent identity is an emerging category. Flag for roadmap: governance of AI agent service principals / OAuth tokens in ADManager Plus or PAM360.'),
+    bc('ServiceNow', 'Continuous compliance monitoring with real-time posture scoring', 'GRC & Compliance', 'Enhance', 'ADManager Plus', 'ADManager Plus has pre-built compliance reports (SOX, HIPAA, GDPR, PCI DSS) and scheduled access certification. Needs real-time continuous posture monitoring rather than scheduled reports.'),
+    bc('SailPoint', 'AI-driven access certification — our AI recommends revoke/approve decisions', 'GRC & Compliance', 'Enhance', 'ADManager Plus', 'ADManager Plus runs access reviews with manager approval workflows. AI-assisted recommendations (peer group analysis) are on the roadmap.'),
+    bc('OneTrust', 'Outcome-Driven Metrics dashboard — board-level cyber risk in business terms', 'GRC & Compliance', 'Gap', 'None', 'Gartner is pushing ODMs hard. ME needs a business-impact metrics dashboard beyond technical counts. Raise with product team.'),
+    bc('Zscaler', 'We are the Zero Trust network layer — identity is just one piece', 'Zero Trust', 'Have It', 'Multiple', 'ME owns the identity pillar of Zero Trust: MFA, passwordless (FIDO2), JIT privilege, least-privilege provisioning, conditional access in ID360. Integrates with ZTNA vendors for the network layer — complementary, not competing.'),
+    bc('Ping Identity', 'Adaptive MFA with risk-based authentication signals', 'Zero Trust', 'Have It', 'AD360', 'ADSelfService Plus (part of AD360) supports adaptive MFA, device trust and location-based policies. FIDO2/passkey supported.'),
+    bc('Netskope', 'We block shadow AI in real time — employees using unauthorized AI tools', 'AI & Agentic', 'Gap', 'None', 'Shadow AI control is a network/CASB capability. ME does not cover this. Potential integration story with CASB partners.'),
+    bc('Varonis', 'AI agents have excessive permissions — we auto-remediate over-privileged AI identities', 'AI & Agentic', 'Enhance', 'ADManager Plus', 'ADManager Plus can enforce least-privilege for user accounts. Extension to AI agent service principals needs an explicit roadmap item.'),
+    bc('IBM', 'Autonomous security operations — AI agents triage and respond without human intervention', 'AI & Agentic', 'Enhance', 'Multiple', 'ADAudit Plus uses ML for anomaly detection and alerting. Full autonomous response is a roadmap item. Current strength: detection + alerting + SIEM integration.'),
+    bc('Wiz', 'Cloud Infrastructure Entitlement Management — we govern AWS/Azure/GCP permissions', 'Cloud IGA', 'Gap', 'None', 'CIEM (cloud entitlements in AWS/Azure/GCP) is not covered by ME today. ID360 handles SaaS and Entra ID. Raise CIEM as a roadmap priority.'),
+    bc('Saviynt', 'Single platform for on-prem and multi-cloud IGA — one governance layer everywhere', 'Cloud IGA', 'Have It', 'Multiple', 'ADManager Plus is the gold standard for on-prem AD. ID360 extends cloud governance to Entra ID, Google Workspace and 100+ SaaS apps via SCIM. Story: strong on-prem, extend to cloud.'),
+    bc('SecurityScorecard', 'Third-party cyber risk scoring — continuous vendor risk monitoring', 'TPRM', 'Gap', 'None', 'ME does not do vendor risk scoring. PAM360 controls vendor privileged sessions (time-bound, recorded). For TPRM scoring, position as complementary.'),
+    bc('Thales', 'Post-quantum cryptography ready — our HSMs support NIST PQC algorithms', 'PQC', 'Gap', 'None', 'PQC for identity/vaults is industry-wide. Ask competitors what is GA vs. roadmap. Most are evaluating. Flag for PAM360 HSM integration roadmap.'),
+    bc('CyberArk', 'We are the market leader in PAM — only enterprise-grade privileged access', 'Privileged Access', 'Have It', 'PAM360', 'PAM360 covers the same PAM use cases: password vaulting, JIT, session recording, SSH keys, certificates, AAPM secrets management. ME advantage: better value, deeper AD integration, bundled with IGA.'),
+  ]
+
+  /* ------------------------------------------------------------------ */
   /* Insights                                                            */
   /* ------------------------------------------------------------------ */
 
@@ -1165,6 +1200,7 @@ export function buildGartnerTrip(): Trip {
       ],
     },
     exhibitors: { exhibitors: exhibitorList },
+    competitive: { claims: battleCardClaims },
     slides: [],
     createdAt: now,
     updatedAt: now,

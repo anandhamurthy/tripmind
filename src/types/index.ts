@@ -221,6 +221,47 @@ export interface ExhibitorsData {
   exhibitors: Exhibitor[]
 }
 
+/* ── Competitive Intel ── */
+
+export type CompetitiveStatus = 'Have It' | 'Enhance' | 'Gap'
+
+export type MEProduct =
+  | 'ADManager Plus'
+  | 'PAM360'
+  | 'Identity360'
+  | 'AD360'
+  | 'ADAudit Plus'
+  | 'Multiple'
+  | 'None'
+
+export type CompetitiveTopic =
+  | 'NHI'
+  | 'GRC & Compliance'
+  | 'Zero Trust'
+  | 'AI & Agentic'
+  | 'Cloud IGA'
+  | 'TPRM'
+  | 'PQC'
+  | 'Privileged Access'
+  | 'Other'
+
+export interface CompetitorClaim {
+  id: string
+  competitor: string
+  claim: string
+  topic: CompetitiveTopic
+  status: CompetitiveStatus
+  meProduct: MEProduct
+  ourResponse: string
+  notes: string
+  timestamp: string
+  starred: boolean
+}
+
+export interface CompetitiveData {
+  claims: CompetitorClaim[]
+}
+
 export interface Trip {
   id: string
   basics: TripBasics
@@ -234,6 +275,7 @@ export interface Trip {
   packing: PackingData
   dayPlan: DayPlan
   exhibitors: ExhibitorsData
+  competitive: CompetitiveData
   slides: Slide[]
   createdAt: string
   updatedAt: string

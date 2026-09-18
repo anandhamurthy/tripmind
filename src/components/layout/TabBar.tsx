@@ -9,6 +9,7 @@ import {
   Luggage,
   MapPin,
   Monitor,
+  Target,
   UtensilsCrossed,
 } from 'lucide-react'
 import { useTripStore } from '../../store/useTripStore'
@@ -23,6 +24,7 @@ export const TABS = [
   { id: 'food', label: 'Food', Icon: UtensilsCrossed },
   { id: 'packing', label: 'Packing', Icon: Luggage },
   { id: 'exhibitors', label: 'Exhibitors', Icon: Building2 },
+  { id: 'competitive', label: 'Competitive', Icon: Target },
   { id: 'summary', label: 'Summary', Icon: FileText },
 ] as const
 

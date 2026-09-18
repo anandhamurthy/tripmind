@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { buildGartnerTrip, defaultPackingSections } from '../data/gartnerTemplate'
 import type {
+  CompetitorClaim,
   CurrencyConfig,
   DayPlanDay,
   DayPlanItem,
@@ -220,6 +221,11 @@ interface TripState {
   toggleExhibitorVisited: (tripId: string, exhibitorId: string) => void
   toggleExhibitorInterested: (tripId: string, exhibitorId: string) => void
 
+  addClaim: (tripId: string, claim: Omit<CompetitorClaim, 'id' | 'timestamp'>) => void
+  updateClaim: (tripId: string, claimId: string, updates: Partial<CompetitorClaim>) => void
+  deleteClaim: (tripId: string, claimId: string) => void
+  toggleClaimStarred: (tripId: string, claimId: string) => void
+
   setSlides: (tripId: string, slides: Slide[]) => void
   updateSlide: (tripId: string, slideId: string, updates: Partial<Slide>) => void
   addBlankSlide: (tripId: string) => void
@@ -304,6 +310,7 @@ export const useTripStore = create<TripState>()(
             packing: { sections: defaultPackingSections() },
             dayPlan: { days: [] },
             exhibitors: { exhibitors: [] },
+            competitive: { claims: [] },
             slides: [],
             createdAt: now,
             updatedAt: now,
@@ -810,6 +817,47 @@ export const useTripStore = create<TripState>()(
             },
           })),
 
+        /* ---------------- Competitive Intel ---------------- */
+
+        addClaim: (tripId, claim) =>
+          patch(tripId, (t) => ({
+            ...t,
+            competitive: {
+              claims: [
+                ...(t.competitive?.claims ?? []),
+                { ...claim, id: uid(), timestamp: new Date().toISOString() },
+              ],
+            },
+          })),
+
+        updateClaim: (tripId, claimId, updates) =>
+          patch(tripId, (t) => ({
+            ...t,
+            competitive: {
+              claims: (t.competitive?.claims ?? []).map((c) =>
+                c.id === claimId ? { ...c, ...updates } : c,
+              ),
+            },
+          })),
+
+        deleteClaim: (tripId, claimId) =>
+          patch(tripId, (t) => ({
+            ...t,
+            competitive: {
+              claims: (t.competitive?.claims ?? []).filter((c) => c.id !== claimId),
+            },
+          })),
+
+        toggleClaimStarred: (tripId, claimId) =>
+          patch(tripId, (t) => ({
+            ...t,
+            competitive: {
+              claims: (t.competitive?.claims ?? []).map((c) =>
+                c.id === claimId ? { ...c, starred: !c.starred } : c,
+              ),
+            },
+          })),
+
         /* ---------------- Slides ---------------- */
 
         setSlides: (tripId, slides) => patch(tripId, (t) => ({ ...t, slides })),
@@ -876,7 +924,7 @@ export const useTripStore = create<TripState>()(
     },
     {
       name: 'tripmind-store',
-      version: 3,
+      version: 4,
       migrate: (persisted: unknown, fromVersion: number) => {
         const state = persisted as { trips?: Trip[] }
         if (Array.isArray(state.trips)) {
@@ -884,6 +932,7 @@ export const useTripStore = create<TripState>()(
             let updated = t
             if (fromVersion < 2 && !updated.dayPlan) updated = { ...updated, dayPlan: { days: [] } }
             if (fromVersion < 3 && !updated.exhibitors) updated = { ...updated, exhibitors: { exhibitors: [] } }
+            if (fromVersion < 4 && !updated.competitive) updated = { ...updated, competitive: { claims: [] } }
             return updated
           })
         }

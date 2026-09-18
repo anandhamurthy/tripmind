@@ -163,7 +163,6 @@ export const PRODUCT_FEATURES: ProductFeature[] = [
   // Remote Access
   f('PAM360','Remote Access Gateway','Browser-based privileged remote access','Launch RDP/SSH sessions from a browser — no VPN, no agent on the target.', ['Privileged Access','Zero Trust']),
   f('PAM360','Remote Access Gateway','Agentless access','No software required on target servers; access via PAM360 gateway.', ['Privileged Access']),
-  f('PAM360','Remote Access Gateway','Vendor access without credential sharing','External vendors access systems through the gateway without ever seeing the password.', ['TPRM','Privileged Access']),
 
   // Secrets / AAPM
   f('PAM360','Secrets Management (AAPM)','Eliminate hardcoded credentials','Applications retrieve credentials via API instead of embedding them in code.', ['NHI','AI & Agentic','DevSecOps']),

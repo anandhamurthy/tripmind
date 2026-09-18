@@ -9,7 +9,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react'
-import type { Exhibitor, ExhibitorCategory } from '../../types'
+import type { Exhibitor, ExhibitorCategory, SponsorTier } from '../../types'
 import { useActiveTrip, useTripStore } from '../../store/useTripStore'
 import Button from '../shared/Button'
 import Input from '../shared/Input'
@@ -43,9 +43,20 @@ const CATEGORY_COLORS: Record<ExhibitorCategory, string> = {
   Other: 'bg-slate-100 text-slate-600 border-slate-200',
 }
 
+const SPONSOR_TIERS: SponsorTier[] = ['Premier Plus', 'Premier', 'Platinum', 'Silver', 'Other']
+
+const TIER_COLORS: Record<SponsorTier, string> = {
+  'Premier Plus': 'bg-yellow-100 text-yellow-800 border-yellow-300',
+  'Premier':      'bg-purple-100 text-purple-700 border-purple-200',
+  'Platinum':     'bg-slate-100 text-slate-600 border-slate-300',
+  'Silver':       'bg-gray-100 text-gray-500 border-gray-300',
+  'Other':        'bg-white text-gray-400 border-gray-200',
+}
+
 const emptyForm = (): Omit<Exhibitor, 'id'> => ({
   name: '',
   category: 'Other',
+  sponsorTier: 'Other',
   description: '',
   website: '',
   boothNumber: '',
@@ -242,6 +253,19 @@ export default function ExhibitorsTab() {
             </select>
           </div>
 
+          <div className="space-y-1.5">
+            <label className="block text-[13px] font-medium text-text-primary">Sponsor Tier</label>
+            <select
+              value={form.sponsorTier}
+              onChange={(e) => pf({ sponsorTier: e.target.value as SponsorTier })}
+              className="w-full rounded-control border border-border bg-surface px-3 py-2 text-sm text-text-primary focus:border-primary focus:outline-none"
+            >
+              {SPONSOR_TIERS.map((t) => (
+                <option key={t} value={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+
           <Input
             label="Booth Number"
             value={form.boothNumber ?? ''}
@@ -335,9 +359,16 @@ function ExhibitorCard({ exhibitor: e, onEdit, onDelete, onToggleVisited, onTogg
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="truncate font-sans text-[14px] font-semibold text-text-primary">{e.name}</p>
-          {e.boothNumber && (
-            <p className="text-[11px] text-text-secondary">Booth {e.boothNumber}</p>
-          )}
+          <div className="mt-0.5 flex items-center gap-1.5">
+            {e.sponsorTier && e.sponsorTier !== 'Other' && (
+              <span className={['rounded border px-1.5 py-px text-[10px] font-semibold', TIER_COLORS[e.sponsorTier]].join(' ')}>
+                {e.sponsorTier}
+              </span>
+            )}
+            {e.boothNumber && (
+              <span className="text-[11px] text-text-secondary">Booth {e.boothNumber}</span>
+            )}
+          </div>
         </div>
         <div className="flex shrink-0 gap-1 opacity-0 transition-opacity group-hover:opacity-100">
           <button

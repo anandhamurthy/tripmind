@@ -202,10 +202,13 @@ export type ExhibitorCategory =
   | 'Data Security'
   | 'Other'
 
+export type SponsorTier = 'Premier Plus' | 'Premier' | 'Platinum' | 'Silver' | 'Other'
+
 export interface Exhibitor {
   id: string
   name: string
   category: ExhibitorCategory
+  sponsorTier: SponsorTier
   description: string
   website: string
   boothNumber?: string

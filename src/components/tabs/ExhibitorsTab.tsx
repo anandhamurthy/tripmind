@@ -187,7 +187,7 @@ export default function ExhibitorsTab() {
         <EmptyState
           icon={<BookMarked size={28} />}
           heading="No exhibitors found"
-          description="Add exhibitors or adjust your filters."
+          subtext="Add exhibitors or adjust your filters."
         />
       ) : (
         <div className="space-y-6">

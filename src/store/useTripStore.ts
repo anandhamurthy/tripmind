@@ -6,6 +6,8 @@ import type {
   DayPlanDay,
   DayPlanItem,
   DayPlanSlot,
+  Exhibitor,
+  ExhibitorCategory,
   Flight,
   Hotel,
   Insight,
@@ -213,6 +215,12 @@ interface TripState {
   moveDayPlanItem: (tripId: string, dayId: string, fromSlotId: string, toSlotId: string, item: DayPlanItem) => void
   reorderDayPlanSlots: (tripId: string, dayId: string, slots: DayPlanSlot[]) => void
 
+  addExhibitor: (tripId: string, exhibitor: Omit<Exhibitor, 'id'>) => void
+  updateExhibitor: (tripId: string, exhibitorId: string, updates: Partial<Exhibitor>) => void
+  deleteExhibitor: (tripId: string, exhibitorId: string) => void
+  toggleExhibitorVisited: (tripId: string, exhibitorId: string) => void
+  toggleExhibitorInterested: (tripId: string, exhibitorId: string) => void
+
   setSlides: (tripId: string, slides: Slide[]) => void
   updateSlide: (tripId: string, slideId: string, updates: Partial<Slide>) => void
   addBlankSlide: (tripId: string) => void
@@ -296,6 +304,7 @@ export const useTripStore = create<TripState>()(
             restaurants: { totalBudget: 0, days: [] },
             packing: { sections: defaultPackingSections() },
             dayPlan: { days: [] },
+            exhibitors: { exhibitors: [] },
             slides: [],
             createdAt: now,
             updatedAt: now,
@@ -754,6 +763,54 @@ export const useTripStore = create<TripState>()(
           })
         },
 
+        /* ---------------- Exhibitors ---------------- */
+
+        addExhibitor: (tripId, exhibitor) =>
+          patch(tripId, (t) => ({
+            ...t,
+            exhibitors: {
+              exhibitors: [...(t.exhibitors?.exhibitors ?? []), { ...exhibitor, id: uid() }],
+            },
+          })),
+
+        updateExhibitor: (tripId, exhibitorId, updates) =>
+          patch(tripId, (t) => ({
+            ...t,
+            exhibitors: {
+              exhibitors: t.exhibitors.exhibitors.map((e) =>
+                e.id === exhibitorId ? { ...e, ...updates } : e,
+              ),
+            },
+          })),
+
+        deleteExhibitor: (tripId, exhibitorId) =>
+          patch(tripId, (t) => ({
+            ...t,
+            exhibitors: {
+              exhibitors: t.exhibitors.exhibitors.filter((e) => e.id !== exhibitorId),
+            },
+          })),
+
+        toggleExhibitorVisited: (tripId, exhibitorId) =>
+          patch(tripId, (t) => ({
+            ...t,
+            exhibitors: {
+              exhibitors: t.exhibitors.exhibitors.map((e) =>
+                e.id === exhibitorId ? { ...e, visited: !e.visited } : e,
+              ),
+            },
+          })),
+
+        toggleExhibitorInterested: (tripId, exhibitorId) =>
+          patch(tripId, (t) => ({
+            ...t,
+            exhibitors: {
+              exhibitors: t.exhibitors.exhibitors.map((e) =>
+                e.id === exhibitorId ? { ...e, interested: !e.interested } : e,
+              ),
+            },
+          })),
+
         /* ---------------- Slides ---------------- */
 
         setSlides: (tripId, slides) => patch(tripId, (t) => ({ ...t, slides })),
@@ -820,13 +877,16 @@ export const useTripStore = create<TripState>()(
     },
     {
       name: 'tripmind-store',
-      version: 2,
+      version: 3,
       migrate: (persisted: unknown, fromVersion: number) => {
         const state = persisted as { trips?: Trip[] }
-        if (fromVersion < 2 && Array.isArray(state.trips)) {
-          state.trips = state.trips.map((t) =>
-            t.dayPlan ? t : { ...t, dayPlan: { days: [] } },
-          )
+        if (Array.isArray(state.trips)) {
+          state.trips = state.trips.map((t) => {
+            let updated = t
+            if (fromVersion < 2 && !updated.dayPlan) updated = { ...updated, dayPlan: { days: [] } }
+            if (fromVersion < 3 && !updated.exhibitors) updated = { ...updated, exhibitors: { exhibitors: [] } }
+            return updated
+          })
         }
         return state
       },

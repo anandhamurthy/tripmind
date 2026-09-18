@@ -189,6 +189,35 @@ export interface DayPlan {
   days: DayPlanDay[]
 }
 
+/* ── Exhibitors ── */
+
+export type ExhibitorCategory =
+  | 'SIEM & SOC'
+  | 'Endpoint & XDR'
+  | 'Identity & Access'
+  | 'Cloud Security'
+  | 'Network Security'
+  | 'GRC & Risk'
+  | 'Threat Intelligence'
+  | 'Data Security'
+  | 'Other'
+
+export interface Exhibitor {
+  id: string
+  name: string
+  category: ExhibitorCategory
+  description: string
+  website: string
+  boothNumber?: string
+  visited: boolean
+  interested: boolean
+  notes: string
+}
+
+export interface ExhibitorsData {
+  exhibitors: Exhibitor[]
+}
+
 export interface Trip {
   id: string
   basics: TripBasics
@@ -201,6 +230,7 @@ export interface Trip {
   restaurants: RestaurantData
   packing: PackingData
   dayPlan: DayPlan
+  exhibitors: ExhibitorsData
   slides: Slide[]
   createdAt: string
   updatedAt: string

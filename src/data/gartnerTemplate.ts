@@ -1,4 +1,4 @@
-import type { Insight, PackingSection, Session, SightseeingPlace, Trip } from '../types'
+import type { Exhibitor, Insight, PackingSection, Session, SightseeingPlace, Trip } from '../types'
 import { uid } from '../store/useTripStore'
 
 /** Personal default packing list — used for every new trip. */
@@ -559,6 +559,56 @@ export function buildGartnerTrip(): Trip {
   ]
 
   /* ------------------------------------------------------------------ */
+  /* Exhibitors                                                         */
+  /* ------------------------------------------------------------------ */
+
+  const exhibitorList: Exhibitor[] = [
+    // ── SIEM & SOC ───────────────────────────────────────────────────
+    { id: uid(), name: 'Splunk (Cisco)', category: 'SIEM & SOC', boothNumber: '', description: 'Unified security and observability platform — SIEM, SOAR, and threat detection.', website: 'https://www.splunk.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'IBM Security QRadar', category: 'SIEM & SOC', boothNumber: '', description: 'AI-powered SIEM and SOAR for threat detection and incident response.', website: 'https://www.ibm.com/security/qradar', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Microsoft Sentinel', category: 'SIEM & SOC', boothNumber: '', description: 'Cloud-native SIEM and SOAR with deep Microsoft 365 and Azure integration.', website: 'https://azure.microsoft.com/en-us/products/microsoft-sentinel', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Exabeam', category: 'SIEM & SOC', boothNumber: '', description: 'Next-gen SIEM with UEBA and automation to speed up threat detection.', website: 'https://www.exabeam.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'LogRhythm', category: 'SIEM & SOC', boothNumber: '', description: 'SIEM platform delivering security analytics, log management, and SOAR.', website: 'https://www.logrhythm.com', visited: false, interested: false, notes: '' },
+    // ── Endpoint & XDR ──────────────────────────────────────────────
+    { id: uid(), name: 'CrowdStrike', category: 'Endpoint & XDR', boothNumber: '', description: 'Cloud-native XDR and threat intelligence on the Falcon platform.', website: 'https://www.crowdstrike.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'SentinelOne', category: 'Endpoint & XDR', boothNumber: '', description: 'Autonomous AI-powered endpoint and XDR security platform.', website: 'https://www.sentinelone.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Palo Alto Networks (Cortex)', category: 'Endpoint & XDR', boothNumber: '', description: 'Cortex XDR for endpoint, network, and cloud threat detection.', website: 'https://www.paloaltonetworks.com/cortex', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Trend Micro', category: 'Endpoint & XDR', boothNumber: '', description: 'Endpoint, cloud, and network security with Vision One XDR.', website: 'https://www.trendmicro.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Tanium', category: 'Endpoint & XDR', boothNumber: '', description: 'Real-time endpoint management and security at enterprise scale.', website: 'https://www.tanium.com', visited: false, interested: false, notes: '' },
+    // ── Identity & Access ────────────────────────────────────────────
+    { id: uid(), name: 'CyberArk', category: 'Identity & Access', boothNumber: '', description: 'Privileged access management and identity security platform.', website: 'https://www.cyberark.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Okta', category: 'Identity & Access', boothNumber: '', description: 'Identity platform for workforce and customer IAM, MFA, and SSO.', website: 'https://www.okta.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'SailPoint', category: 'Identity & Access', boothNumber: '', description: 'Identity governance for access lifecycle and compliance.', website: 'https://www.sailpoint.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'BeyondTrust', category: 'Identity & Access', boothNumber: '', description: 'PAM and remote access security to reduce privilege-based risk.', website: 'https://www.beyondtrust.com', visited: false, interested: false, notes: '' },
+    // ── Cloud Security ───────────────────────────────────────────────
+    { id: uid(), name: 'Zscaler', category: 'Cloud Security', boothNumber: '', description: 'Zero-trust cloud security platform — ZIA, ZPA, and CSPM.', website: 'https://www.zscaler.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Wiz', category: 'Cloud Security', boothNumber: '', description: 'Cloud-native CNAPP for risk visibility across multi-cloud environments.', website: 'https://www.wiz.io', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Orca Security', category: 'Cloud Security', boothNumber: '', description: 'Agentless cloud security platform for risk and vulnerability management.', website: 'https://orca.security', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Lacework', category: 'Cloud Security', boothNumber: '', description: 'Data-driven cloud security with anomaly detection and CSPM.', website: 'https://www.lacework.com', visited: false, interested: false, notes: '' },
+    // ── Network Security ─────────────────────────────────────────────
+    { id: uid(), name: 'Fortinet', category: 'Network Security', boothNumber: '', description: 'Integrated network and security fabric — FortiGate NGFW and SD-WAN.', website: 'https://www.fortinet.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Check Point', category: 'Network Security', boothNumber: '', description: 'Infinity architecture for network, cloud, and endpoint threat prevention.', website: 'https://www.checkpoint.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Darktrace', category: 'Network Security', boothNumber: '', description: 'Self-learning AI for network threat detection and autonomous response.', website: 'https://www.darktrace.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Vectra AI', category: 'Network Security', boothNumber: '', description: 'AI-driven NDR for hybrid and multi-cloud attack detection.', website: 'https://www.vectra.ai', visited: false, interested: false, notes: '' },
+    // ── GRC & Risk ───────────────────────────────────────────────────
+    { id: uid(), name: 'ServiceNow', category: 'GRC & Risk', boothNumber: '', description: 'Integrated risk management and GRC workflows on the Now platform.', website: 'https://www.servicenow.com/products/governance-risk-and-compliance.html', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Archer (RSA)', category: 'GRC & Risk', boothNumber: '', description: 'Enterprise GRC platform for risk, audit, and compliance management.', website: 'https://www.archerirm.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'OneTrust', category: 'GRC & Risk', boothNumber: '', description: 'Privacy, security, and data governance platform for compliance.', website: 'https://www.onetrust.com', visited: false, interested: false, notes: '' },
+    // ── Threat Intelligence ──────────────────────────────────────────
+    { id: uid(), name: 'Recorded Future', category: 'Threat Intelligence', boothNumber: '', description: 'Real-time threat intelligence powered by machine learning and open sources.', website: 'https://www.recordedfuture.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Mandiant (Google)', category: 'Threat Intelligence', boothNumber: '', description: 'Frontline intelligence and incident response from elite threat researchers.', website: 'https://www.mandiant.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Secureworks', category: 'Threat Intelligence', boothNumber: '', description: 'Managed detection and response with Taegis XDR threat platform.', website: 'https://www.secureworks.com', visited: false, interested: false, notes: '' },
+    // ── Data Security ────────────────────────────────────────────────
+    { id: uid(), name: 'Varonis', category: 'Data Security', boothNumber: '', description: 'Data security platform for detecting insider threats and ransomware.', website: 'https://www.varonis.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Proofpoint', category: 'Data Security', boothNumber: '', description: 'Email security, DLP, and insider threat protection.', website: 'https://www.proofpoint.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Forcepoint', category: 'Data Security', boothNumber: '', description: 'Data-first SASE and DLP for hybrid workforce security.', website: 'https://www.forcepoint.com', visited: false, interested: false, notes: '' },
+    // ── Other ────────────────────────────────────────────────────────
+    { id: uid(), name: 'Tenable', category: 'Other', boothNumber: '', description: 'Exposure management — vulnerability, OT, and cloud risk visibility.', website: 'https://www.tenable.com', visited: false, interested: true, notes: '' },
+    { id: uid(), name: 'Qualys', category: 'Other', boothNumber: '', description: 'Cloud-based vulnerability management, compliance, and security posture.', website: 'https://www.qualys.com', visited: false, interested: false, notes: '' },
+    { id: uid(), name: 'Rapid7', category: 'Other', boothNumber: '', description: 'Vulnerability risk management and MDR with InsightVM and InsightIDR.', website: 'https://www.rapid7.com', visited: false, interested: false, notes: '' },
+  ]
+
+  /* ------------------------------------------------------------------ */
   /* Insights                                                            */
   /* ------------------------------------------------------------------ */
 
@@ -1114,6 +1164,7 @@ export function buildGartnerTrip(): Trip {
         },
       ],
     },
+    exhibitors: { exhibitors: exhibitorList },
     slides: [],
     createdAt: now,
     updatedAt: now,

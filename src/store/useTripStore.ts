@@ -87,8 +87,6 @@ const emptyBasics = (): TripBasics => ({
   travelTimeHotelToVenue: 0,
 })
 
-const emptyPackingSections = (): PackingSection[] =>
-  DEFAULT_SECTION_NAMES.map((name) => ({ id: uid(), name, items: [] }))
 
 /**
  * Keeps the per-day columns of Sightseeing and Food in sync with the trip's
